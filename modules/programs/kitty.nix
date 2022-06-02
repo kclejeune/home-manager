@@ -31,7 +31,7 @@ in {
     enable = mkEnableOption "Kitty terminal emulator";
 
     package = mkOption {
-      type = types.package;
+      type = types.nullOr types.package;
       default = pkgs.kitty;
       defaultText = literalExpression "pkgs.kitty";
       description = ''
@@ -127,7 +127,7 @@ in {
       '';
     }];
 
-    home.packages = [ cfg.package ] ++ optionalPackage cfg.font;
+    home.packages = optionalPackage cfg.package ++ optionalPackage cfg.font;
 
     xdg.configFile."kitty/kitty.conf" = {
       text = ''
